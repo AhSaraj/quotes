@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <header class="jumbotron align-item-center min-vh-100 d-flex justify-content-around">
+        <div>
+            <h2>Welcome, {{user.first_name}} </h2>
+        </div>
+        <div>
+            <a href="/quotes"> Back</a>
+        </div>
+        <div>
+            <a href="/logout" ,>logout</a>
+        </div>
+
+    </header>
+
+    {% for quote in user.quote_uploaded.all %}
+
+    <p>
+        {{quote.author}} {{quote.quote}}
+    </p>
+    {%endfor%}
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+
+        <li {% if message.tags %} class="{{message.tags}} alert-danger" {% endif %}> {{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <header class="jumbotron align-item-center min-vh-100 d-flex justify-content-around">
+        <div>
+            <h2>Welcome, {{user.first_name}} </h2>
+        </div>
+        <div>
+            <a href="/quote/{{user.id}}/updatePage"> Edit My account</a>
+        </div>
+        <div>
+            <a href="/logout" ,>logout</a>
+        </div>
+    </header>
+    <div div class="align-item-center min-vh-100 d-flex justify-content-around">
+        <div class="form-control">
+            <form method="post" action="/add_quote">
+                {%csrf_token%}
+                <h2 class="jumbotron">Add a Quote!</h2>
+                <label for="author" Title>Author</label>
+                <input type="text" name="author" placeholder="author"><br>
+                <label for="quote">Quote</label>
+                <textarea name="quote" id="quote" cols="19" rows="5"></textarea><br>
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+        </div>
+
+        <div class="form-control">
+            <h2 class="jumbotron">All Quotes</h2>
+            <ul>
+                {% for quote in quotes%}
+                <li>
+                    <p>
+                        {{quote.author}} {{quote.quote}}
+                    </p>
+                    <p>(Posted by: <a href="/quote/{{quote.uploaded_by.id}}">{{quote.uploaded_by.first_name}} {{quote.uploaded_by.last_name}})</a></p>
+                </li>
+                <p>likes : {{quote.liked_quote.count}} people liked this</p> <a href="/quote/{{quote.id}}/liked_quote" class="btn btn-success">Like</a> {% if request.session.user_id == quote.uploaded_by.id %}
+                <a href='/quote/{{quote.id}}/delete' class="btn btn-danger">Delete</a> {%endif%} {%endfor%}
+            </ul>
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>
